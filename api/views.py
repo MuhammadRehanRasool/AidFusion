@@ -60,8 +60,8 @@ def user(request, pk=None):
         # GET A USER BY ID
         if pk is None:
             return JsonResponse({"message": "No user id given"}, safe=False)
-        instance = models.Users.objects.get(pk=int(pk))
-        object = serializers.ViewUsersSerializer(instance, many=False)
+        instance = models.Users.objects.exclude(pk=pk).exclude(username="admin").all()
+        object = serializers.ViewUsersSerializer(instance, many=True)
         return JsonResponse(object.data, safe=False)
     if request.method == "POST":
         # ADD A USER

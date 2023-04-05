@@ -77,6 +77,8 @@ const Login = () => {
       <div className=" px-6 py-12 h-full ">
         <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
           <div className="w-[28rem] p-6 dark:bg-dimBlue shadow rounded relative z-30 bg-white">
+            <img src="logo.png" className="w-40 mx-auto"/>
+
             <h1 className="text-gray-800 text-center text-2xl font-semibold py-5 dark:text-gray-50 items-center flex justify-center">
               <Link to="/" className="mr-3">
                 <svg
@@ -120,15 +122,6 @@ const Login = () => {
                 />
               </div>
 
-              <div className="flex justify-between items-center mb-6">
-                <Link
-                  to="/reset-password"
-                  className="text-blue-600 hover:text-blue-700  text-sm focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out dark:text-blue-400"
-                >
-                  Forgot password?
-                </Link>
-              </div>
-
               <button
                 onClick={login}
                 className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-3 uppercase text-center mb-2 w-full"
@@ -143,14 +136,14 @@ const Login = () => {
               <div className="flex space-x-1 items-center justify-center my-6">
                 <div className="form-group form-check ">
                   <p className="text-sm  dark:text-gray-50">
-                    Don't have an Account?
+                    Don't have an account?
                   </p>
                 </div>
                 <Link
                   to="/register"
                   className="text-blue-600 dark:text-blue-400 text-sm hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
                 >
-                  Register
+                  Register.
                 </Link>
               </div>
             </form>

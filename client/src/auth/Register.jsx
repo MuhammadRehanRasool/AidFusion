@@ -1,13 +1,18 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import bg from "../assets/bg2.jpg";
 import {
   setMessage,
   CONSTANT,
   resetMessage,
   checkLoginFromLogin,
 } from "../CONSTANT";
+
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
+
 export default function Register() {
   let navigate = useNavigate();
   useEffect(() => {
@@ -15,7 +20,6 @@ export default function Register() {
       navigate("/");
     }
   }, []);
-
   const __INIT__ = {
     role: "acceptor",
     username: "",
@@ -88,6 +92,7 @@ export default function Register() {
         <div className=" px-6 py-12 h-full">
           <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800 ">
             <div className="w-120 p-6 bg-white shadow rounded text-gray-800  dark:bg-dimBlue relative z-30 ">
+              <img src="logo.png" className="w-40 mx-auto" />
               <h1 className="mb-2 text-gray-800 text-center text-2xl font-semibold py-5 dark:text-gray-50 items-center flex justify-center">
                 <Link to="/" className="mr-3">
                   <svg
@@ -117,14 +122,16 @@ export default function Register() {
                     name="role"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
-                    <option selected>Choose Role</option>
+                    <option selected value={""}>
+                      Choose Role
+                    </option>
                     <option value="acceptor">Acceptor</option>
                     <option value="donor">Donor</option>
                   </select>
                 </div>
                 <div className="mb-3">
                   <input
-                    type="text"
+                    type="number"
                     className="form-control block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white  dark:bg-dimBlue  dark:text-gray-50 focus:border-blue-600 focus:outline-none"
                     placeholder="National CNIC Number"
                     name="username"
@@ -133,13 +140,9 @@ export default function Register() {
                   />
                 </div>
                 <div className="mb-3">
-                  <input
-                    type="text"
-                    className="form-control block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white  dark:bg-dimBlue  dark:text-gray-50 focus:border-blue-600 focus:outline-none"
-                    placeholder="Address"
-                    name="address"
-                    value={credentials.address}
-                    onChange={changeCredentials}
+                  <PlacesAutocomplete
+                    payload={credentials}
+                    setPayload={setCredentials}
                   />
                 </div>
 
@@ -187,3 +190,50 @@ export default function Register() {
     </>
   );
 }
+
+const PlacesAutocomplete = ({ setPayload, payload }) => {
+  const {
+    ready,
+    value,
+    setValue,
+    suggestions: { status, data },
+    clearSuggestions,
+  } = usePlacesAutocomplete({ callbackName: "ADDRESS" });
+
+  const handleSelect = async (address) => {
+    if (address !== "") {
+      setValue(address, false);
+      clearSuggestions();
+      setPayload({
+        ...payload,
+        address: address,
+      });
+    }
+  };
+
+  return (
+    <div className="relative">
+      <input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        disabled={!ready}
+        className="combobox-input bg-gray-50 border rounded-none border-gray-300 text-gray-900 sm:text-sm focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+        placeholder="Search an address..."
+      />
+      <div className="absolute w-full">
+        {status === "OK" &&
+          data.map((one, i) => (
+            <span
+              key={one.place_id}
+              onClick={() => {
+                handleSelect(one.description);
+              }}
+              className="bg-gray-100 block w-full pl-5 py-3 cursor-pointer hover:bg-white transition-all ease-in-out duration-150"
+            >
+              {one.description}
+            </span>
+          ))}
+      </div>
+    </div>
+  );
+};

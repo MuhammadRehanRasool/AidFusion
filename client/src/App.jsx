@@ -5,6 +5,7 @@ import Register from "./auth/Register";
 import Home from "./views/Home";
 import Layout from "./layout/Layout";
 import TakeMeToAdmin from "./components/TakeMeToAdmin";
+import "./App.css"
 
 function App() {
   return (

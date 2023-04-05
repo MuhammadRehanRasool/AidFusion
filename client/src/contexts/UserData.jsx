@@ -5,9 +5,9 @@ const UserData = React.createContext({
     access_token: "",
     personal: {
       id: "",
-      email: "",
       username: "",
       role: "",
+      timestamp: "",
     },
     isLoggedIn: false,
   },
