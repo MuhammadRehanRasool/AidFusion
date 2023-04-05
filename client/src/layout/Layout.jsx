@@ -11,9 +11,9 @@ export default function Layout(props) {
   let __init_session = {
     personal: {
       id: "",
-      email: "",
       username: "",
       role: "",
+      timestamp: "",
     },
     isLoggedIn: false,
   };
@@ -47,6 +47,8 @@ export default function Layout(props) {
           isLoggedIn={session.isLoggedIn}
           __init_session={__init_session}
           setSession={setSession}
+          username={session?.personal?.username}
+          role={session?.personal?.role}
         />
         <div className="mx-10">{props.children}</div>
       </UserData.Provider>

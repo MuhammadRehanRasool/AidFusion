@@ -11,7 +11,7 @@ class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Users
         fields = ('id', 'username', 'email', 'password',
-                  'first_name', 'last_name', 'address', 'cnic')
+                  'first_name', 'last_name', 'address', 'role')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -29,13 +29,10 @@ class ViewUsersSerializer(serializers.ModelSerializer):
         model = models.Users
         fields = (
             "id",
-            "email",
             'username',
-            'first_name',
-            'last_name',
-            'address'
+            'address',
             "timestamp",
-            'cnic'
+            'role'
         )
 
 
