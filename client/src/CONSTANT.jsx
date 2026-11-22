@@ -4,7 +4,7 @@ export const CONSTANT = {
   server: "http://127.0.0.1:8000/api/", // CHANGE WITH YOUR BACKEND LINK (/ is MUST IN END)
   admin: "http://127.0.0.1:8000/admin", // CHANGE WITH YOUR BACKEND LINK (/ is MUST IN END)
   client: "http://localhost:3000/", // CHANGE WITH YOUR FRONTEND LINK (/ is MUST IN END)
-  GOOGLE_MAPS_API: "REMOVED",
+  GOOGLE_MAPS_API: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
 };
 
 export const checkLoginFromLogin = () => {
